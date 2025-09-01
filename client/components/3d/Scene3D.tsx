@@ -4,8 +4,10 @@ import { Suspense } from "react";
 import { WireframeGlobe } from "./WireframeGlobe";
 import { FloatingDots } from "./FloatingDots";
 import { SpaceScene } from "./SpaceScene";
+import { supportsWebGL } from "@/lib/webgl";
 
 export function Scene3D() {
+  if (!supportsWebGL()) return null;
   return (
     <div className="absolute inset-0 opacity-30 pointer-events-none -z-5">
       <Canvas camera={{ position: [0, 1, 7], fov: 50 }}>
