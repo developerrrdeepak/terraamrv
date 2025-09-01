@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, lazy, Suspense } from "react";
 import { CarbonEstimator } from "@/components/estimator/CarbonEstimator";
 import { SoilHealthPredictor } from "@/components/soil/SoilHealthPredictor";
 import { CropMonitor } from "@/components/crops/CropMonitor";
@@ -17,8 +17,8 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { useI18n } from "@/context/i18n";
 import { SignInForm } from "@/components/auth/SignInForm";
-import { Assistant } from "@/components/chat/Assistant";
-import { Scene3D } from "@/components/3d/Scene3D";
+const Assistant = lazy(() => import("@/components/chat/Assistant").then(m => ({ default: m.Assistant })));
+const Scene3D = lazy(() => import("@/components/3d/Scene3D").then(m => ({ default: m.Scene3D })));
 import { SpaceBackground } from "@/components/3d/SpaceBackground";
 
 export default function Index() {
@@ -41,7 +41,9 @@ export default function Index() {
     <div id="top" className="min-h-screen">
       <section className="relative overflow-hidden">
         <SpaceBackground />
-        <Scene3D />
+        <Suspense fallback={null}>
+          <Scene3D />
+        </Suspense>
         <div className="relative z-10 container mx-auto grid items-center gap-10 px-4 pb-10 pt-12 md:grid-cols-2 md:pt-20">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
@@ -150,7 +152,9 @@ export default function Index() {
 
       <section className="container mx-auto px-4">
         <div className="rounded-xl border bg-card/70 p-5 shadow-sm">
-          <Assistant />
+          <Suspense fallback={<div className="text-sm text-muted-foreground">Loading assistant…</div>}>
+            <Assistant />
+          </Suspense>
         </div>
       </section>
 
