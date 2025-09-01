@@ -1,6 +1,7 @@
 import "./global.css";
 import "./lib/sentry";
 
+import * as Sentry from "@sentry/react";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -26,8 +27,23 @@ import { FloatingAssistant } from "@/components/chat/FloatingAssistant";
 
 const queryClient = new QueryClient();
 
+function AppFallback() {
+  return (
+    <div className="p-6 text-sm">
+      <div className="mb-2 font-semibold">Something went wrong</div>
+      <button
+        className="rounded-md border px-3 py-2"
+        onClick={() => window.location.reload()}
+      >
+        Reload
+      </button>
+    </div>
+  );
+}
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <Sentry.ErrorBoundary fallback={<AppFallback />}>
+    <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="system" storageKey="terramrv-theme">
       <I18nProvider>
         <AuthProvider>
@@ -62,7 +78,8 @@ const App = () => (
         </AuthProvider>
       </I18nProvider>
     </ThemeProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </Sentry.ErrorBoundary>
 );
 
 const container = document.getElementById("root")!;
