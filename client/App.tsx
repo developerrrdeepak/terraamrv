@@ -1,6 +1,7 @@
 import "./global.css";
 import "./lib/sentry";
 
+import * as Sentry from "@sentry/react";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -26,43 +27,59 @@ import { FloatingAssistant } from "@/components/chat/FloatingAssistant";
 
 const queryClient = new QueryClient();
 
+function AppFallback() {
+  return (
+    <div className="p-6 text-sm">
+      <div className="mb-2 font-semibold">Something went wrong</div>
+      <button
+        className="rounded-md border px-3 py-2"
+        onClick={() => window.location.reload()}
+      >
+        Reload
+      </button>
+    </div>
+  );
+}
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="system" storageKey="terramrv-theme">
-      <I18nProvider>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <div className="min-h-screen md:grid md:grid-cols-[260px_1fr]">
-                <Header />
-                <div className="flex min-h-screen flex-col">
-                  <main className="flex-1">
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/admin" element={<Admin />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/credits" element={<Credits />} />
-                      <Route path="/reports" element={<Reports />} />
-                      <Route path="/learn" element={<LearningHub />} />
-                      <Route path="/support" element={<Support />} />
-                      <Route path="/map" element={<MapPage />} />
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </main>
-                  <Footer />
+  <Sentry.ErrorBoundary fallback={<AppFallback />}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme="system" storageKey="terramrv-theme">
+        <I18nProvider>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <div className="min-h-screen md:grid md:grid-cols-[260px_1fr]">
+                  <Header />
+                  <div className="flex min-h-screen flex-col">
+                    <main className="flex-1">
+                      <Routes>
+                        <Route path="/" element={<Index />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/credits" element={<Credits />} />
+                        <Route path="/reports" element={<Reports />} />
+                        <Route path="/learn" element={<LearningHub />} />
+                        <Route path="/support" element={<Support />} />
+                        <Route path="/map" element={<MapPage />} />
+                        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </main>
+                    <Footer />
+                  </div>
                 </div>
-              </div>
-              <FloatingAssistant />
-            </BrowserRouter>
-          </TooltipProvider>
-        </AuthProvider>
-      </I18nProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+                <FloatingAssistant />
+              </BrowserRouter>
+            </TooltipProvider>
+          </AuthProvider>
+        </I18nProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </Sentry.ErrorBoundary>
 );
 
 const container = document.getElementById("root")!;
