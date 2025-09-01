@@ -17,8 +17,12 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { useI18n } from "@/context/i18n";
 import { SignInForm } from "@/components/auth/SignInForm";
-const Assistant = lazy(() => import("@/components/chat/Assistant").then(m => ({ default: m.Assistant })));
-const Scene3D = lazy(() => import("@/components/3d/Scene3D").then(m => ({ default: m.Scene3D })));
+const Assistant = lazy(() =>
+  import("@/components/chat/Assistant").then((m) => ({ default: m.Assistant })),
+);
+const Scene3D = lazy(() =>
+  import("@/components/3d/Scene3D").then((m) => ({ default: m.Scene3D })),
+);
 import { SpaceBackground } from "@/components/3d/SpaceBackground";
 
 export default function Index() {
@@ -152,7 +156,13 @@ export default function Index() {
 
       <section className="container mx-auto px-4">
         <div className="rounded-xl border bg-card/70 p-5 shadow-sm">
-          <Suspense fallback={<div className="text-sm text-muted-foreground">Loading assistant…</div>}>
+          <Suspense
+            fallback={
+              <div className="text-sm text-muted-foreground">
+                Loading assistant…
+              </div>
+            }
+          >
             <Assistant />
           </Suspense>
         </div>
