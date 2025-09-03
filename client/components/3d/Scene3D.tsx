@@ -1,5 +1,5 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useThree } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
+import { OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useEffect } from "react";
 import { WireframeGlobe } from "./WireframeGlobe";
 import { FloatingDots } from "./FloatingDots";
