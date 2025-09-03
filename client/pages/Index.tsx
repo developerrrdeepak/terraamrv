@@ -17,7 +17,7 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { useI18n } from "@/context/i18n";
 import { SignInForm } from "@/components/auth/SignInForm";
-const Assistant = lazy(() =>
+const LazyAssistant = lazy(() =>
   import("@/components/chat/Assistant").then((m) => ({ default: m.Assistant })),
 );
 const Scene3D = lazy(() =>
@@ -167,7 +167,7 @@ export default function Index() {
                 </div>
               }
             >
-              <Assistant />
+              <LazyAssistant />
             </Suspense>
           </div>
         )}
