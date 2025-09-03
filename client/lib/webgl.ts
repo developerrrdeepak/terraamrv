@@ -24,12 +24,17 @@ export function supportsWebGL2(): boolean {
 export function isLowEndDevice(): boolean {
   if (typeof window === "undefined") return true;
   const ua = navigator.userAgent || "";
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
   const dm = (navigator as any).deviceMemory as number | undefined;
   const cores = navigator.hardwareConcurrency || 0;
   const saveData = (navigator as any).connection?.saveData === true;
-  const effectiveType = (navigator as any).connection?.effectiveType as string | undefined;
-  const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const effectiveType = (navigator as any).connection?.effectiveType as
+    | string
+    | undefined;
+  const prefersReducedMotion =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Consider low-end if any of these indicate constraints
   if (saveData || prefersReducedMotion) return true;
