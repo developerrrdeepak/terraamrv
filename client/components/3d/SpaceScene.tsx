@@ -46,14 +46,14 @@ export function SpaceScene() {
 
     if (nebula1Ref.current) {
       nebula1Ref.current.rotation.z = state.clock.getElapsedTime() * 0.002;
-      nebula1Ref.current.material.opacity =
-        0.1 + Math.sin(state.clock.getElapsedTime() * 0.5) * 0.05;
+      const mat1 = nebula1Ref.current.material as THREE.MeshBasicMaterial;
+      mat1.opacity = 0.1 + Math.sin(state.clock.getElapsedTime() * 0.5) * 0.05;
     }
 
     if (nebula2Ref.current) {
       nebula2Ref.current.rotation.z = -state.clock.getElapsedTime() * 0.003;
-      nebula2Ref.current.material.opacity =
-        0.08 + Math.cos(state.clock.getElapsedTime() * 0.7) * 0.04;
+      const mat2 = nebula2Ref.current.material as THREE.MeshBasicMaterial;
+      mat2.opacity = 0.08 + Math.cos(state.clock.getElapsedTime() * 0.7) * 0.04;
     }
   });
 

@@ -1,5 +1,6 @@
 import { Assistant } from "./Assistant";
 import { useState } from "react";
+import { Assistant } from "./Assistant";
 
 export function FloatingAssistant() {
   const [open, setOpen] = useState(false);
